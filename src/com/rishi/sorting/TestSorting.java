@@ -43,7 +43,6 @@ public class TestSorting {
 			}
 		}
 		
-		// put the pivot on its correct position
 		int temp = arr[--start];
 		arr[--start]= arr[pivot];
 		arr[pivot]=temp;
