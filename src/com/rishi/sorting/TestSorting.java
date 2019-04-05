@@ -19,40 +19,42 @@ public class TestSorting {
 		}
 	}
 	
-	public static void quickSort(int[] arr){
-		partition(arr, 0, arr.length-1);
+	public static void quickSort(int[] arr,int start,int end){
+		int sorted = partition(arr, start,end);
+		if(sorted != -2){
+		quickSort(arr,start,sorted-1);
+		quickSort(arr,sorted+1,end);
+		}
 	}
 	
-	public static void partition(int[] arr,int start,int end){
-		int pivot = start;
+	public static int partition(int[] arr,int start,int end){
+		if(start >= end)
+			return -2;
+		int pivot = end;
 		int leftPointer = start - 1;
-		while (start <= end) {
-			while (start <= end & arr[start] <= arr[pivot]) {
-				start++;
+		while (start < pivot) {
+			if(arr[start] < arr[pivot]){
+				//if(leftPointer+1 != start){
+				int temp = arr[++leftPointer];
+				arr[leftPointer]= arr[start];
+				arr[start]=temp;
+				//}
 			}
-			while (start <= end & arr[end] >= arr[pivot]) {
-				end--;
-			}
-
-			if (start < end) {
-				int temp = arr[start];
-				arr[start] = arr[end];
-				arr[end] = temp;
-				start++;
-				end--;
-			}
+			start++;
 		}
 		
-		int temp = arr[--start];
-		arr[--start]= arr[pivot];
-		arr[pivot]=temp;
-		
-		partition(arr, start, pivot-1);
-		partition(arr, pivot+1, end);
+		// exchange with pivot
+		int temp11 = arr[pivot];
+		arr[pivot]= arr[++leftPointer];
+		arr[leftPointer]=temp11;
+		return leftPointer;
 	}
 	
 	public static void main(String[] args) {
 		int[] arr = {15,3,18,2,19,4,20,6};
-		quickSort(arr);
+		quickSort(arr,0,arr.length-1);
+		for(int i=0;i<arr.length;i++){
+			System.out.print(arr[i]+"	,");
+		}
 	}
 }
